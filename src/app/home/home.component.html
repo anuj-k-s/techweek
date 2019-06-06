@@ -1,0 +1,105 @@
+<mat-card>    
+    <!-- Title of an Card -->    
+    <mat-card-title>    
+        Register Here  
+    </mat-card-title>    
+    
+    <mat-card-content>    
+        <form>    
+            <table style="width  : 40%;">    
+                <tr>    
+                    <td colspan="4">    
+                        <mat-form-field class="demo-full-width">    
+                            <input matInput placeholder="First Name*"
+                             [(ngModel)]="participant.firstName" name  = 'firstName' (ngModelChange) = "invalidFirstNameMsg=null">    
+                        </mat-form-field>    
+                    </td>  
+                 </tr>
+                 <tr *ngIf = "invalidFirstNameMsg">    
+                    <td colspan="4">    
+                        <span style="color: red"> {{invalidFirstNameMsg}}</span>
+                    </td>  
+                 </tr>
+                 
+                  <tr>    
+                    <td colspan="4">    
+                        <mat-form-field class="demo-full-width">    
+                            <input matInput placeholder="Last Name*"
+                             [(ngModel)]="participant.lastName" name  = 'lastName' (ngModelChange)="invalidLastNameMsg = null">    
+                        </mat-form-field>    
+                    </td>  
+                 </tr>
+                 
+                 <tr *ngIf = "invalidLastNameMsg">    
+                    <td colspan="4">    
+                        <span style="color: red"> {{invalidLastNameMsg}}</span>
+                    </td>  
+                 </tr>
+                 
+                     
+                <tr>    
+                     <td colspan="4">    
+                        <mat-form-field class="demo-full-width">    
+                            <input matInput  placeholder="email id*" [(ngModel)]="participant.email" name  = 'email' (ngModelChange)="invalidEmailMsg = null">    
+                        </mat-form-field>    
+                    </td>  
+                </tr> 
+                <tr *ngIf  = "invalidEmailMsg">    
+                    <td colspan="4">    
+                        <span style="color: red">{{invalidEmailMsg}}</span>
+                    </td>  
+                 </tr>
+				
+				<tr>
+				
+				<mat-form-field class="demo-full-width">    
+                           <mat-select placeholder="Location*" name="location" [(ngModel)]="participant.location" (ngModelChange) = "invalidLocationMsg = null" > 
+								<mat-option
+								*ngFor="let location of locations"
+								[value]="location">{{location}}
+								</mat-option> 
+							</mat-select> 
+                        </mat-form-field>    
+					<!-- <mat-select placeholder="Select Location"
+						name="location"
+						[(ngModel)]="participant.location"> 
+						<mat-option
+						*ngFor="let location of locations"
+						[value]="location">{{location}}
+						</mat-option> 
+					</mat-select> -->
+				</tr>
+				<tr *ngIf  = "invalidLocationMsg">    
+                    <td colspan="4">    
+                        <span style="color: red">{{invalidLocationMsg}}</span>
+                    </td>  
+                 </tr> 
+                 
+                 <tr>
+                 <mat-form-field class="demo-full-width">  
+					<mat-select placeholder="Offering*" (ngModelChange) = "invalidOfferingMsg = null"
+						name="location"
+						[(ngModel)]="participant.offering"> 
+						<mat-option
+						*ngFor="let offering of offerings"
+						[value]="offering">{{offering}}
+						</mat-option> 
+					</mat-select>
+				</mat-form-field>
+				</tr>
+				<tr *ngIf  = "invalidOfferingMsg">    
+                    <td colspan="4">    
+                        <span style="color: red">{{invalidOfferingMsg}}</span>
+                    </td>  
+                 </tr>    
+                
+                <tr>    
+                    <td colspan="2" class="content-center">    
+                        <button mat-raised-button color="accent" (click) = "register()">Register</button>    
+                        <button mat-raised-button color="accent" (click) = "resetForm()" style="margin-left: 5%;">Reset</button>    
+                    </td>    
+                </tr>    
+            </table>    
+        </form>    
+    </mat-card-content>    
+</mat-card>      

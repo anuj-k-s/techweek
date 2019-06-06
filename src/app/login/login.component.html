@@ -1,0 +1,19 @@
+<div class="body"></div>
+<div class="grad"></div>
+<div class="header">
+	<div>
+		Tech<span>Week</span>
+	</div>
+</div>
+<br>
+<form (keydown)="keyDownFunction($event)">
+	<div class="login">
+		<input type="text" placeholder="username" name="user"
+			[(ngModel)]="user.userName"><br> <input type="password"
+			placeholder="password" name="password" [(ngModel)]="user.password"><br>
+
+		<button class="btn btn-success pull-right loginBtn"
+			(click)="onSubmit()">Login</button>
+
+	</div>
+</form>
