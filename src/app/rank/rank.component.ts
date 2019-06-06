@@ -5,6 +5,7 @@ import {Participant} from '../home/Participant';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {MatSnackBar} from '@angular/material';
 import {SharedService} from '../SharedService';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-rank',
@@ -12,7 +13,7 @@ import {SharedService} from '../SharedService';
     styleUrls: ['./rank.component.scss']
 })
 export class RankComponent implements OnInit {
-
+    search: string ='';
     events: any[];
     participants: Participant[] = [];
     participantUpdated: Participant[] = [];
@@ -20,14 +21,19 @@ export class RankComponent implements OnInit {
     displayedColumns: string[] = ['firstName', 'lastName', 'email', 'location', 'scoreOne', 'scoreTwo', 'scoreThree', 'totalScore'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild(MatSort) sort: MatSort;
-
-    constructor(private reportService: ReportService, private rankService: RankService, private snackBar: MatSnackBar, private sharedServcie: SharedService) {
-
+    @ViewChild(MatSort) sort: MatSort;    
+    searchForm : FormGroup;
+    constructor(private reportService: ReportService, 
+        private rankService: RankService, private snackBar: MatSnackBar, 
+        private sharedServcie: SharedService,
+        private fb : FormBuilder) {
     }
-
-
     ngOnInit() {
+
+        this.searchForm = this.fb.group({
+            search: ''
+          });
+        
         this.reportService.getAllParticipant().subscribe((data: any[]) => {
 
             if (data && data.length > 0) {
@@ -70,7 +76,17 @@ export class RankComponent implements OnInit {
         filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
         this.dataSource.filter = filterValue;
     }
-
+    validateNumber(e:any,score){
+        let input  = String.fromCharCode(e.charCode);
+       if(score){
+           let num = score.toString();
+           input = num.concat(input);
+       }
+        const regex = /^(([0-5]?[0-9]?)|60)$/;
+        if(!regex.test(input)){
+            e.preventDefault();
+        }
+    }
     onChangeScore(data: any) {
         let scoreOne = data.scoreOne ? data.scoreOne : 0;
         let scoreTwo = data.scoreTwo ? data.scoreTwo : 0;
@@ -86,7 +102,7 @@ export class RankComponent implements OnInit {
     }
 
     submit() {
-
+        debugger;
         if (this.participantUpdated.length == 0) {
             this.snackBar.open('Nothing to update', 'Undo', {
                 duration: 6000,
@@ -109,7 +125,9 @@ export class RankComponent implements OnInit {
                             horizontalPosition: 'right'
 
                         });
-                    })
+                    })                                     
+                   this.searchForm.reset();
+
                 } else {
                     this.snackBar.open('Error occurred', 'Undo', {
                         duration: 6000,

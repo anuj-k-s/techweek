@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
     }
 
     keyDownFunction($event) {
-        if (event.keyCode == 13) {
+        if (event['keyCode'] == 13) {
             this.onSubmit();
         }
     }
